@@ -15,6 +15,15 @@ export default class App extends React.Component {
     () => {this.fetchWithPage(0)})
   }
 
+  loadMore() {
+    const newPage = this.state.page + 1;
+    this.setState({
+      page: newPage
+    }, () => {
+      this.fetchWithPage(newPage);
+    });
+  }
+
   fetchWithPage(page){
     fetch(`${api_url}?api_key=${api_key}&limit=4&offset=${page * 4}`)
     .then ((data) => data.json())
@@ -27,7 +36,7 @@ export default class App extends React.Component {
     })
     .then ((json) => {
       this.setState({
-        posts : json.response.posts,
+        posts : this.state.posts.concat(json.response.posts),
         loading : false
       })
     })
@@ -40,15 +49,18 @@ export default class App extends React.Component {
     this.state = {
       posts: [],
       loading : false,
+      page: 0
     }
     this.fetchWithPage = this.fetchWithPage.bind(this);
+
+    this.loadMore = this.loadMore.bind(this);
       
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TumblrList posts={this.state.posts} />
+        <TumblrList posts={this.state.posts} loadMore={this.loadMore} loading={this.state.loading}/>
       </View>
     );
   }
