@@ -5,14 +5,12 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 // create a component
 class TumblrPost extends Component {
   render() {
-    const img = { uri: this.props.post.item.photos[0].original_size.url };
-    const {width, height} = { uri: this.props.post.item.photos[0].original_size };
+    const img = { uri: this.props.post.item.photos[0].alt_sizes[2].url };
+    const {width, height} = this.props.post.item.photos[0].alt_sizes[2];
 
-    console.log('image url:', img);
-        
     return (
       <View style={styles.container}>
-        <Image style={{width, height}} source={img} />
+        <Image style={{height: 366, width: 250, marginBottom: 50}} source={img} />
       </View>
     );
   }
@@ -21,10 +19,11 @@ class TumblrPost extends Component {
 // define your styles
 const styles = StyleSheet.create({
   container: {
+
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#ffffff',
   },
 });
 
