@@ -1,17 +1,20 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
+
 
 // create a component
 class TumblrPost extends Component {
   render() {
-    const img = { uri: this.props.post.item.photos[0].alt_sizes[2].url };
-    const {width, height} = this.props.post.item.photos[0].alt_sizes[2];
+    const img = { uri: this.props.photos[0].alt_sizes[2].url };
+    const {width, height} = this.props.photos[0].alt_sizes[2];
 
     return (
-      <View style={styles.container}>
-        <Image style={{height: 366, width: 250, marginBottom: 50}} source={img} />
-      </View>
+      <TouchableHighlight onPress={this.props.loadProfile}>
+        <View style={styles.container}>
+          <Image style={{height: 366, width: 250, marginBottom: 50}} source={img} />
+        </View>
+      </TouchableHighlight>
     );
   }
 }
@@ -19,7 +22,6 @@ class TumblrPost extends Component {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -6,14 +6,18 @@ import TumblrPost from './TumblrPost';
 // create a component
 class TumblrList extends Component {
   render() {
+
+    const props = this.props.screenProps;
+    const { navigate } = this.props.navigation;
+    console.log(props.posts)
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.props.posts}
-          refreshing={this.props.loading}
-          onRefresh={this.props.loadMore}
+          data={props.posts}
+          refreshing={props.loading}
+          onRefresh={props.loadMore}
           onEndReachedThreshold={0.05}
-          onEndReached={this.props.loadMore}
+          onEndReached={props.loadMore}
           keyExtractor={(post) => post.id}
           ListFooterComponent={() =>
             <View style={{backgroundColor: '#ffffff'}}>
@@ -21,8 +25,8 @@ class TumblrList extends Component {
             </View>
           }
           renderItem={(postItem) => {
-              return <TumblrPost post = {postItem}
-              />
+              return <TumblrPost {...postItem.item} loadProfile={() => navigate('TumblrProfile', postItem.item)} />
+              
           }}
         />
       </View>

@@ -2,6 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import testData from './TEST_DATA.json';
 import TumblrList from './TumblrList';
+import TumblrProfile from './TumblrProfile';
+import {StackNavigator} from 'react-navigation';
+
+const Routes = StackNavigator({
+  TumblrList: { screen: TumblrList},
+  TumblrProfile: {screen: TumblrProfile}
+},
+{
+  initialRouteName: 'TumblrList'
+}
+)
 
 const api_key = "ty4XIgHVw2xYH8EiUrVjbYIaXqMlzXdz9cdc3H4sKp52Kk6fAv";
 const api_url = "https://api.tumblr.com/v2/blog/rickandmortythings/posts/photo";
@@ -59,9 +70,12 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TumblrList posts={this.state.posts} loadMore={this.loadMore} loading={this.state.loading}/>
-      </View>
+        <Routes
+        screenProps={{
+          posts: this.state.posts,
+          loadmore: this.loadMore,
+          loading: this.state.loading
+        }} />
     );
   }
 }
@@ -74,3 +88,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
